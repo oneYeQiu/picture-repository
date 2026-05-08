@@ -14,7 +14,8 @@ spring:
 mybatis-plus:
   configuration:
     # MyBatis 配置
-    map-underscore-to-camel-case: true
+    # 关闭下划线映射驼峰命名 ， 因为数据库字段是驼峰命名
+    map-underscore-to-camel-case: false
     # 仅在开发环境下开启日志打印
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
