@@ -1,4 +1,4 @@
-package com.itjj.picturebackend.model.dto;
+package com.itjj.picturebackend.model.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
