@@ -1,6 +1,7 @@
 package com.itjj.picturebackend.model.vo;
 
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.itjj.picturebackend.model.entity.Picture;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -91,7 +92,8 @@ public class PictureVO implements Serializable {
      * 创建用户信息  
      */  
     private UserVO user;  
-  
+
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;  
   
     /**  
