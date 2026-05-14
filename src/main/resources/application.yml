@@ -6,11 +6,15 @@ spring:
   application:
     name: picture-backend
   datasource:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-#      url: jdbc:mysql://localhost:3306/picture?useSSL=false&serverTimezone=UTC
-      url: jdbc:mysql://localhost:3306/picture?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # url: jdbc:mysql://localhost:3306/picture?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/picture?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  # 开启大文件上传功能
+  servlet:
+    multipart:
+      max-file-size: 10MB
 mybatis-plus:
   configuration:
     # MyBatis 配置
