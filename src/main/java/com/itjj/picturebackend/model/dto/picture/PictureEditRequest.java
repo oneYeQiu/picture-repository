@@ -3,6 +3,7 @@ package com.itjj.picturebackend.model.dto.picture;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class PictureEditRequest implements Serializable {
@@ -30,7 +31,7 @@ public class PictureEditRequest implements Serializable {
     /**  
      * 标签  
      */  
-    private List<String> tags;  
+    private List<String> tags;
   
     private static final long serialVersionUID = 1L;  
 }

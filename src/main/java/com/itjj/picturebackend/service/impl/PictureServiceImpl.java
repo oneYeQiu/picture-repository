@@ -3,22 +3,35 @@ package com.itjj.picturebackend.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.itjj.picturebackend.annotation.AuthCheck;
+import com.itjj.picturebackend.common.BaseResponse;
+import com.itjj.picturebackend.common.DeleteRequest;
+import com.itjj.picturebackend.common.ResultUtils;
+import com.itjj.picturebackend.constant.UserConstant;
+import com.itjj.picturebackend.exception.BusinessException;
 import com.itjj.picturebackend.exception.ErrorCode;
 import com.itjj.picturebackend.exception.ThrowUtils;
 import com.itjj.picturebackend.manager.FileManager;
 import com.itjj.picturebackend.mapper.PictureMapper;
 import com.itjj.picturebackend.model.dto.file.UploadPictureResult;
+import com.itjj.picturebackend.model.dto.picture.PictureEditRequest;
 import com.itjj.picturebackend.model.dto.picture.PictureQueryRequest;
+import com.itjj.picturebackend.model.dto.picture.PictureUpdateRequest;
 import com.itjj.picturebackend.model.dto.picture.PictureUploadRequest;
 import com.itjj.picturebackend.model.entity.Picture;
 import com.itjj.picturebackend.model.entity.User;
 import com.itjj.picturebackend.model.vo.PictureVO;
 import com.itjj.picturebackend.service.PictureService;
 import com.itjj.picturebackend.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -44,6 +57,9 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture>
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private PictureService pictureService;
 
     /**
      *  上传图片
@@ -199,6 +215,30 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture>
         return pictureVOPage;
     }
 
+
+    /**
+     * 校验图片实体
+     * @param picture 图片实体
+     *                校验图片实体是否符合要求
+     *                校验失败则抛出异常
+     *                校验成功则返回无
+     */
+    @Override
+    public void validPicture(Picture picture) {
+        ThrowUtils.throwIf(picture == null, ErrorCode.PARAMS_ERROR);
+        // 从对象中取值
+        Long id = picture.getId();
+        String url = picture.getUrl();
+        String introduction = picture.getIntroduction();
+        // 修改数据时，id 不能为空，有参数则校验
+        ThrowUtils.throwIf(ObjUtil.isNull(id), ErrorCode.PARAMS_ERROR, "id 不能为空");
+        if (StrUtil.isNotBlank(url)) {
+            ThrowUtils.throwIf(url.length() > 1024, ErrorCode.PARAMS_ERROR, "url 过长");
+        }
+        if (StrUtil.isNotBlank(introduction)) {
+            ThrowUtils.throwIf(introduction.length() > 800, ErrorCode.PARAMS_ERROR, "简介过长");
+        }
+    }
 
 
 }
