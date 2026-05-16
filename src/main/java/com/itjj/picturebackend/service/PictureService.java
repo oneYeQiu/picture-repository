@@ -2,7 +2,9 @@ package com.itjj.picturebackend.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.itjj.picturebackend.model.dto.file.UploadPictureResult;
 import com.itjj.picturebackend.model.dto.picture.PictureQueryRequest;
+import com.itjj.picturebackend.model.dto.picture.PictureReviewRequest;
 import com.itjj.picturebackend.model.dto.picture.PictureUploadRequest;
 import com.itjj.picturebackend.model.entity.Picture;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -32,11 +34,53 @@ public interface PictureService extends IService<Picture> {
                             User loginUser);
 
 
+    /**
+     * 构建查询条件
+     *
+     * @param pictureQueryRequest
+     * @return
+     */
     QueryWrapper<Picture> getQueryWrapper(PictureQueryRequest pictureQueryRequest);
 
+    /**
+     * 构建图片VO
+     *
+     * @param picture
+     * @param request
+     * @return
+     */
     PictureVO getPictureVO(Picture picture, HttpServletRequest request);
 
+    /**
+     * 构建图片VO 分页
+     *
+     * @param picturePage
+     * @param request
+     * @return
+     */
     Page<PictureVO> getPictureVOPage(Page<Picture> picturePage, HttpServletRequest request);
 
+    /**
+     * 校验图片
+     *
+     * @param picture
+     */
     void validPicture(Picture picture);
+
+    /**
+     * 图片审核
+     *
+     * @param pictureReviewRequest
+     * @param loginUser
+     */
+    void doPictureReview(PictureReviewRequest pictureReviewRequest, User loginUser);
+
+    /**
+     * 填充审核参数
+     *
+     * @param picture
+     * @param loginUser
+     */
+    void fillReviewParams(Picture picture, User loginUser);
+
 }
